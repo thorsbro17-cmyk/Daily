@@ -30,7 +30,6 @@
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
     min-height: 100dvh;
-    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 0);
     padding-top: max(env(safe-area-inset-top), 20px);
     padding-bottom: max(env(safe-area-inset-bottom), 32px);
     padding-left: 20px;
@@ -38,222 +37,152 @@
     overscroll-behavior: none;
   }
 
+  /* VIEWS */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* HEADER */
   header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding: 24px 0 20px;
   }
+  .month-label { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+  .day-label { font-size: 42px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--text); }
+  .day-name { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .progress-wrap { text-align: right; }
+  .progress-count { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+  .progress-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-  .month-label {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
+  .progress-bar { width: 100%; height: 2px; background: var(--border); border-radius: 2px; margin-bottom: 24px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
 
-  .day-label {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--text);
-  }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; margin-top: 24px; padding-left: 2px; }
 
-  .day-name {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .progress-wrap {
-    text-align: right;
-  }
-
-  .progress-count {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  .progress-label {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .progress-bar {
-    width: 100%;
-    height: 2px;
-    background: var(--border);
-    border-radius: 2px;
-    margin-bottom: 24px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-    margin-top: 24px;
-    padding-left: 2px;
-  }
-
-  .checklist {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
 
   .item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 15px 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-    -webkit-user-select: none;
-    position: relative;
-    overflow: hidden;
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 15px 16px; cursor: pointer; transition: all 0.2s ease;
+    user-select: none; -webkit-user-select: none; position: relative; overflow: hidden;
   }
-
-  .item:active {
-    transform: scale(0.98);
-    background: #1a1a1a;
-  }
-
-  .item.checked {
-    border-color: #1e1e1e;
-  }
-
-  .item.checked .item-text {
-    color: var(--done-text);
-    text-decoration: line-through;
-    text-decoration-color: #2a2a2a;
-  }
-
-  .item.weekly .check-circle {
-    border-color: var(--weekly);
-  }
-
-  .item.weekly.checked .check-circle {
-    background: var(--weekly);
-    border-color: var(--weekly);
-  }
-
-  .item.checked .check-circle {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
+  .item:active { transform: scale(0.98); background: #1a1a1a; }
+  .item.checked { border-color: #1e1e1e; }
+  .item.checked .item-text { color: var(--done-text); text-decoration: line-through; text-decoration-color: #2a2a2a; }
+  .item.weekly .check-circle { border-color: var(--weekly); }
+  .item.weekly.checked .check-circle { background: var(--weekly); border-color: var(--weekly); }
+  .item.checked .check-circle { background: var(--accent); border-color: var(--accent); }
 
   .check-circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+    width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--border);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
   }
+  .check-circle svg { opacity: 0; transform: scale(0.5); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+  .item.checked .check-circle svg { opacity: 1; transform: scale(1); }
 
-  .check-circle svg {
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .item.checked .check-circle svg {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .item-text {
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.35;
-    color: var(--text);
-    transition: color 0.2s ease;
-    flex: 1;
-  }
+  .item-text { font-size: 15px; font-weight: 400; line-height: 1.35; color: var(--text); transition: color 0.2s ease; flex: 1; }
 
   .weekly-badge {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--weekly);
-    background: rgba(126, 184, 247, 0.1);
-    padding: 3px 7px;
-    border-radius: 6px;
-    flex-shrink: 0;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--weekly); background: rgba(126,184,247,0.1); padding: 3px 7px; border-radius: 6px; flex-shrink: 0;
   }
 
-  .all-done {
-    display: none;
-    text-align: center;
-    padding: 32px 0 16px;
-  }
-
-  .all-done.visible {
-    display: block;
-  }
-
-  .all-done-emoji {
-    font-size: 40px;
-    margin-bottom: 10px;
-  }
-
-  .all-done-text {
-    font-size: 16px;
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .all-done-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
+  .all-done { display: none; text-align: center; padding: 32px 0 16px; }
+  .all-done.visible { display: block; }
+  .all-done-emoji { font-size: 40px; margin-bottom: 10px; }
+  .all-done-text { font-size: 16px; color: var(--accent); font-weight: 500; }
+  .all-done-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
   .reset-btn {
-    display: block;
-    width: 100%;
-    margin-top: 32px;
-    padding: 14px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--muted);
-    font-size: 13px;
-    font-family: inherit;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: all 0.2s;
+    display: block; width: 100%; margin-top: 20px; padding: 14px;
+    background: transparent; border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--muted); font-size: 13px; font-family: inherit; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .reset-btn:active { color: var(--text); border-color: #444; }
+
+  /* NAV TAB BAR */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    padding-bottom: max(env(safe-area-inset-bottom), 12px);
+    padding-top: 10px; padding-left: 20px; padding-right: 20px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex; gap: 0;
+  }
+  .tab-btn {
+    flex: 1; background: transparent; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 6px 0; font-family: inherit;
+  }
+  .tab-btn svg { width: 22px; height: 22px; stroke: var(--muted); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+  .tab-btn span { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+  .tab-btn.active svg { stroke: var(--accent); }
+  .tab-btn.active span { color: var(--accent); }
+
+  /* pad bottom so content doesn't hide behind tab bar */
+  .view { padding-bottom: 80px; }
+
+  /* CALENDAR VIEW */
+  .cal-header { padding: 24px 0 20px; display: flex; justify-content: space-between; align-items: center; }
+  .cal-title { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .streak-pill {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    background: rgba(200,245,90,0.1); color: var(--accent);
+    padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(200,245,90,0.2);
   }
 
-  .reset-btn:active {
-    color: var(--text);
-    border-color: #444;
+  .cal-weekdays {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 8px;
   }
+  .cal-weekday { text-align: center; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 6px 0; }
+
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+
+  .cal-day {
+    aspect-ratio: 1; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer;
+    transition: all 0.15s ease; position: relative;
+  }
+  .cal-day.empty { pointer-events: none; }
+  .cal-day.future { color: #2a2a2a; pointer-events: none; }
+  .cal-day.today { color: var(--text); }
+  .cal-day.today::after {
+    content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+  }
+  .cal-day.complete { background: var(--accent); color: #0a0a0a; font-weight: 700; }
+  .cal-day.partial { background: rgba(200,245,90,0.2); color: var(--accent); }
+  .cal-day.overridden { background: var(--accent); color: #0a0a0a; font-weight: 700; }
+  .cal-day:not(.future):not(.empty):active { transform: scale(0.9); }
+
+  /* DAY DETAIL MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 100; align-items: flex-end; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #1a1a1a; border-radius: 24px 24px 0 0; width: 100%;
+    padding: 20px 20px max(env(safe-area-inset-bottom), 24px);
+    max-height: 85vh; overflow-y: auto;
+  }
+  .modal-handle { width: 36px; height: 4px; background: #333; border-radius: 2px; margin: 0 auto 20px; }
+  .modal-date { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .modal-mark-btn {
+    width: 100%; padding: 14px; border-radius: var(--radius); font-family: inherit;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 16px;
+    border: 1px solid var(--accent); background: transparent; color: var(--accent);
+  }
+  .modal-mark-btn.marked { background: var(--accent); color: #0a0a0a; }
+  .modal-close { width: 100%; padding: 14px; border-radius: var(--radius); font-family: inherit; font-size: 14px; cursor: pointer; transition: all 0.2s; margin-top: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); }
+
+  .cal-legend { display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 
   @media (prefers-reduced-motion: reduce) {
     .item, .check-circle, .check-circle svg, .progress-fill { transition: none; }
@@ -262,35 +191,84 @@
 </head>
 <body>
 
-<header>
-  <div>
-    <div class="month-label">July 2025</div>
-    <div class="day-label" id="dayNum"></div>
-    <div class="day-name" id="dayName"></div>
-  </div>
-  <div class="progress-wrap">
-    <div class="progress-count"><span id="doneCount">0</span><span style="color:var(--muted);font-size:22px;font-weight:400"> / <span id="totalCount"></span></span></div>
-    <div class="progress-label">today</div>
-  </div>
-</header>
+<!-- CHECKLIST VIEW -->
+<div class="view active" id="viewChecklist">
+  <header>
+    <div>
+      <div class="month-label">July 2026</div>
+      <div class="day-label" id="dayNum"></div>
+      <div class="day-name" id="dayName"></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-count"><span id="doneCount">0</span><span style="color:var(--muted);font-size:22px;font-weight:400"> / <span id="totalCount"></span></span></div>
+      <div class="progress-label">today</div>
+    </div>
+  </header>
 
-<div class="progress-bar">
-  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="section-label">Daily</div>
+  <div class="checklist" id="dailyList"></div>
+
+  <div class="section-label">Weekly</div>
+  <div class="checklist" id="weeklyList"></div>
+
+  <div class="all-done" id="allDone">
+    <div class="all-done-emoji">✦</div>
+    <div class="all-done-text">All done.</div>
+    <div class="all-done-sub" id="allDoneSub"></div>
+  </div>
+
+  <button class="reset-btn" onclick="resetDay()">Reset today</button>
 </div>
 
-<div class="section-label">Daily</div>
-<div class="checklist" id="dailyList"></div>
+<!-- CALENDAR VIEW -->
+<div class="view" id="viewCalendar">
+  <div class="cal-header">
+    <div class="cal-title">July</div>
+    <div class="streak-pill" id="streakPill">🔥 0 day streak</div>
+  </div>
 
-<div class="section-label">Weekly</div>
-<div class="checklist" id="weeklyList"></div>
+  <div class="cal-weekdays">
+    <div class="cal-weekday">S</div>
+    <div class="cal-weekday">M</div>
+    <div class="cal-weekday">T</div>
+    <div class="cal-weekday">W</div>
+    <div class="cal-weekday">T</div>
+    <div class="cal-weekday">F</div>
+    <div class="cal-weekday">S</div>
+  </div>
+  <div class="cal-grid" id="calGrid"></div>
 
-<div class="all-done" id="allDone">
-  <div class="all-done-emoji">✦</div>
-  <div class="all-done-text">All done.</div>
-  <div class="all-done-sub" id="allDoneSub"></div>
+  <div class="cal-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Complete</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(200,245,90,0.3)"></div> Partial</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#222;border:1px solid #333"></div> Missed</div>
+  </div>
 </div>
 
-<button class="reset-btn" onclick="resetDay()">Reset today</button>
+<!-- DAY MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-date" id="modalDate"></div>
+    <div class="modal-sub" id="modalSub"></div>
+    <button class="modal-mark-btn" id="modalMarkBtn" onclick="toggleDayOverride()"></button>
+    <button class="modal-close" onclick="closeModalDirect()">Close</button>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tabChecklist" onclick="switchView('checklist')">
+    <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7 4H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2"/><rect x="7" y="2" width="10" height="4" rx="1"/></svg>
+    <span>Today</span>
+  </button>
+  <button class="tab-btn" id="tabCalendar" onclick="switchView('calendar')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    <span>July</span>
+  </button>
+</div>
 
 <script>
 const DAILY = [
@@ -304,39 +282,40 @@ const DAILY = [
   "Listen to / read news · job search",
   "Do something active"
 ];
-
 const WEEKLY = [
   { text: "Finance tracker — log all money spent this week", id: "finance" }
 ];
+const TOTAL = DAILY.length + WEEKLY.length;
 
-function getStorageKey(type) {
-  const now = new Date();
-  if (type === 'daily') {
-    return `july_daily_${now.getFullYear()}_${now.getMonth()}_${now.getDate()}`;
-  }
-  if (type === 'weekly') {
-    const dayOfWeek = now.getDay();
-    const diff = now.getDate() - dayOfWeek;
-    const weekStart = new Date(now.setDate(diff));
-    return `july_weekly_${weekStart.getFullYear()}_${weekStart.getMonth()}_${weekStart.getDate()}`;
-  }
+function dateKey(d) {
+  return `july_daily_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+}
+function weekKey(d) {
+  const day = d.getDay();
+  const diff = d.getDate() - day;
+  const ws = new Date(d); ws.setDate(diff);
+  return `july_weekly_${ws.getFullYear()}_${ws.getMonth()}_${ws.getDate()}`;
+}
+function todayKey() { return dateKey(new Date()); }
+function todayWeekKey() { return weekKey(new Date()); }
+
+function loadState(key) {
+  try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : {}; } catch { return {}; }
+}
+function saveStateRaw(key, state) {
+  try { localStorage.setItem(key, JSON.stringify(state)); } catch {}
 }
 
-function loadState(type) {
-  try {
-    const raw = localStorage.getItem(getStorageKey(type));
-    return raw ? JSON.parse(raw) : {};
-  } catch { return {}; }
-}
+let dailyState = loadState(todayKey());
+let weeklyState = loadState(todayWeekKey());
 
-function saveState(type, state) {
-  try {
-    localStorage.setItem(getStorageKey(type), JSON.stringify(state));
-  } catch {}
+function switchView(v) {
+  document.getElementById('viewChecklist').classList.toggle('active', v === 'checklist');
+  document.getElementById('viewCalendar').classList.toggle('active', v === 'calendar');
+  document.getElementById('tabChecklist').classList.toggle('active', v === 'checklist');
+  document.getElementById('tabCalendar').classList.toggle('active', v === 'calendar');
+  if (v === 'calendar') renderCalendar();
 }
-
-let dailyState = loadState('daily');
-let weeklyState = loadState('weekly');
 
 function renderHeader() {
   const now = new Date();
@@ -348,29 +327,15 @@ function renderHeader() {
 function renderList() {
   const dailyEl = document.getElementById('dailyList');
   const weeklyEl = document.getElementById('weeklyList');
-  dailyEl.innerHTML = '';
-  weeklyEl.innerHTML = '';
-
-  const totalItems = DAILY.length + WEEKLY.length;
-  document.getElementById('totalCount').textContent = totalItems;
+  dailyEl.innerHTML = ''; weeklyEl.innerHTML = '';
+  document.getElementById('totalCount').textContent = TOTAL;
 
   DAILY.forEach((text, i) => {
     const checked = !!dailyState[i];
     const div = document.createElement('div');
     div.className = 'item' + (checked ? ' checked' : '');
-    div.innerHTML = `
-      <div class="check-circle">
-        <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-          <path d="M1 4L4.5 7.5L11 1" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <span class="item-text">${text}</span>
-    `;
-    div.addEventListener('click', () => {
-      dailyState[i] = !dailyState[i];
-      saveState('daily', dailyState);
-      renderList();
-    });
+    div.innerHTML = `<div class="check-circle"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">${text}</span>`;
+    div.addEventListener('click', () => { dailyState[i] = !dailyState[i]; saveStateRaw(todayKey(), dailyState); renderList(); });
     dailyEl.appendChild(div);
   });
 
@@ -378,20 +343,8 @@ function renderList() {
     const checked = !!weeklyState[i];
     const div = document.createElement('div');
     div.className = 'item weekly' + (checked ? ' checked' : '');
-    div.innerHTML = `
-      <div class="check-circle">
-        <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-          <path d="M1 4L4.5 7.5L11 1" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <span class="item-text">${item.text}</span>
-      <span class="weekly-badge">Weekly</span>
-    `;
-    div.addEventListener('click', () => {
-      weeklyState[i] = !weeklyState[i];
-      saveState('weekly', weeklyState);
-      renderList();
-    });
+    div.innerHTML = `<div class="check-circle"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">${item.text}</span><span class="weekly-badge">Weekly</span>`;
+    div.addEventListener('click', () => { weeklyState[i] = !weeklyState[i]; saveStateRaw(todayWeekKey(), weeklyState); renderList(); });
     weeklyEl.appendChild(div);
   });
 
@@ -399,44 +352,134 @@ function renderList() {
 }
 
 function updateProgress() {
-  const dailyDone = Object.values(dailyState).filter(Boolean).length;
-  const weeklyDone = Object.values(weeklyState).filter(Boolean).length;
-  const total = DAILY.length + WEEKLY.length;
-  const done = dailyDone + weeklyDone;
+  const done = Object.values(dailyState).filter(Boolean).length + Object.values(weeklyState).filter(Boolean).length;
   document.getElementById('doneCount').textContent = done;
-  document.getElementById('progressFill').style.width = (done / total * 100) + '%';
-
+  document.getElementById('progressFill').style.width = (done / TOTAL * 100) + '%';
   const allDoneEl = document.getElementById('allDone');
-  if (done === total) {
+  if (done === TOTAL) {
     allDoneEl.classList.add('visible');
     const now = new Date();
-    document.getElementById('allDoneSub').textContent = `${now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'})}`;
+    document.getElementById('allDoneSub').textContent = now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'});
   } else {
     allDoneEl.classList.remove('visible');
   }
 }
 
 function resetDay() {
-  if (confirm('Reset all of today\'s checks?')) {
-    dailyState = {};
-    saveState('daily', dailyState);
-    renderList();
+  if (confirm("Reset all of today's checks?")) {
+    dailyState = {}; saveStateRaw(todayKey(), dailyState); renderList();
   }
 }
+
+// CALENDAR
+function getDayData(date) {
+  const key = dateKey(date);
+  const override = localStorage.getItem('override_' + key);
+  if (override === 'complete') return { done: TOTAL, total: TOTAL, overridden: true };
+  if (override === 'missed') return { done: 0, total: TOTAL, overridden: true };
+  const state = loadState(key);
+  const done = Object.values(state).filter(Boolean).length;
+  return { done, total: TOTAL, overridden: false };
+}
+
+function calcStreak() {
+  const today = new Date();
+  let streak = 0;
+  for (let i = 0; i < 31; i++) {
+    const d = new Date(2026, 6, today.getDate() - i);
+    if (d.getMonth() !== 6) break;
+    if (d > today) continue;
+    const data = getDayData(d);
+    if (data.done === TOTAL) { streak++; }
+    else { if (i > 0) break; }
+  }
+  return streak;
+}
+
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  const today = new Date();
+  const firstDay = new Date(2026, 6, 1).getDay();
+
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    grid.appendChild(empty);
+  }
+
+  for (let d = 1; d <= 31; d++) {
+    const date = new Date(2026, 6, d);
+    const cell = document.createElement('div');
+    cell.textContent = d;
+    const isToday = d === today.getDate() && today.getMonth() === 6 && today.getFullYear() === 2026;
+    const isFuture = date > today;
+
+    if (isFuture) {
+      cell.className = 'cal-day future';
+    } else {
+      const data = getDayData(date);
+      let cls = 'cal-day';
+      if (isToday) cls += ' today';
+      if (data.done === TOTAL) cls += ' complete';
+      else if (data.done > 0) cls += ' partial';
+      if (data.overridden) cls += ' overridden';
+      cell.className = cls;
+      cell.addEventListener('click', () => openModal(date, data));
+    }
+    grid.appendChild(cell);
+  }
+
+  const streak = calcStreak();
+  document.getElementById('streakPill').textContent = streak > 0 ? `🔥 ${streak} day streak` : '✦ Start your streak';
+}
+
+let modalDate = null;
+function openModal(date, data) {
+  modalDate = date;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('modalDate').textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
+  const overrideKey = 'override_' + dateKey(date);
+  const override = localStorage.getItem(overrideKey);
+  const isComplete = data.done === TOTAL || override === 'complete';
+  document.getElementById('modalSub').textContent = isComplete ? 'All tasks completed ✦' : `${data.done} of ${TOTAL} tasks done`;
+  const btn = document.getElementById('modalMarkBtn');
+  if (isComplete) { btn.textContent = 'Unmark as complete'; btn.classList.add('marked'); }
+  else { btn.textContent = 'Mark day as complete'; btn.classList.remove('marked'); }
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function toggleDayOverride() {
+  if (!modalDate) return;
+  const overrideKey = 'override_' + dateKey(modalDate);
+  const current = localStorage.getItem(overrideKey);
+  const data = getDayData(modalDate);
+  const wasComplete = data.done === TOTAL || current === 'complete';
+  if (wasComplete) { localStorage.removeItem(overrideKey); }
+  else { localStorage.setItem(overrideKey, 'complete'); }
+  closeModalDirect();
+  renderCalendar();
+}
+
+function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('open'); modalDate = null; }
 
 renderHeader();
 renderList();
 
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission();
+}
+
 setInterval(() => {
-  const newKey = getStorageKey('daily');
-  const storedKey = window._lastDailyKey;
-  if (storedKey && storedKey !== newKey) {
-    dailyState = {};
-    renderList();
+  const newKey = todayKey();
+  if (window._lastDailyKey && window._lastDailyKey !== newKey) {
+    dailyState = {}; renderList();
   }
   window._lastDailyKey = newKey;
 }, 60000);
-window._lastDailyKey = getStorageKey('daily');
+window._lastDailyKey = todayKey();
 </script>
 </body>
 </html>
