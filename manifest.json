@@ -2,7 +2,7 @@
   "name": "DAILY",
   "short_name": "DAILY",
   "description": "Daily checklist",
-  "start_url": "/Daily/",
+  "start_url": "/Daily/app.html",
   "scope": "/Daily/",
   "display": "standalone",
   "background_color": "#0a0a0a",
